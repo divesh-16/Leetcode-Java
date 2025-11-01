@@ -1,0 +1,51 @@
+Intuition
+We use 2-pointer strategy.
+
+The idea is simple with 2 steps :
+1 : We use 'i' to iterate through the array.
+2 : We use 'prev' pointer which points previous unique element.
+Whenever we find a unique element we increment 'prev' pointer by one(prev++) and store that element in that position. (nums[prev] = nums[i])
+
+Approach
+We keep,
+i=1; prev=0
+So that 'prev' always stays behind. And keep unique element in its position.
+
+When we find a unique/different element than that of nums[prev], we do
+- increment 'prev' by 1 (prev++), so to store unique element on new position
+- store that element in nums[prev].
+- 'i' will help us to iterate through array.
+
+But what if we don't find/get a unique element when we iterate ?
+- we simply ignore/skip the element and continue to next element.
+- So we first check if nums[prev] == nums[i], if it is true we continue.
+
+In the end our 'prev' will point to an index, index till we have unique element. Now we simply return prev+1 which tells the number of unique elements.
+
+Complexity
+Time complexity:
+O(n)
+As we iterate through whole array.
+
+Space complexity:
+O(1)
+
+
+Code :
+
+class Solution {
+    public int removeDuplicates(int[] nums) 
+    {
+        int prev=0; // prev pointer
+        for(int i=1; i<nums.length; i++) // i to iterate through array
+        {
+            if(nums[prev] == nums[i]) // we continue if find similar element
+                continue;
+
+            prev++; // If the execution comes to this line, It means found a unique element, so increment prev by 1
+            nums[prev] = nums[i]; // And store it in new postion.
+        }
+
+        return prev+1;    
+    }
+}
