@@ -1,0 +1,70 @@
+Intuition
+We use Two-pointer technique.
+First pointer stays behind to place non-zero digits.(prev)
+Second pointer to traverse the array. (i)
+
+Approach
+We will keep a 'prev' pointer (starting from 0).
+- Whenever we encounter a non-zero digit, we copy that element in nums[prev].
+- Once copied we increment 'prev' by 1.
+
+Once the whole array is traversed by 'i' we will have 'prev' placed to length till which non-zero digits exists.
+
+Now, we simply run second loop to put zero on remaining positions - starting the loop from prev.
+
+Complexity
+Time complexity:
+O(n)
+Space complexity:
+O(1)
+
+
+Code
+
+
+class Solution {
+    /*
+    // 1st Attempt
+    public void moveZeroes(int[] nums) 
+    {
+        int prev=0;
+        if(nums[prev]!=0)
+        {
+            prev++;
+        }
+        for(int i=1; i<nums.length; i++)
+        {
+            if(nums[i] != 0)
+            {
+                nums[prev] = nums[i];
+                prev++;
+            }
+        }
+
+        if(nums.length != 1)
+        {
+            for( ; prev<nums.length; prev++)
+            {
+                nums[prev]=0;
+            }
+        }    
+    }
+    */
+
+    public void moveZeroes(int[] nums) 
+    {
+        int prev=0;
+        for(int i=0; i<nums.length; i++)
+        {
+            if(nums[i] != 0)
+            {
+                nums[prev++] = nums[i];
+            }
+        }
+
+        for( ; prev<nums.length; prev++)
+        {
+            nums[prev]=0;
+        }  
+    }
+}
