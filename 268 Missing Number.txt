@@ -1,0 +1,71 @@
+Intuition
+Brute-force Approach
+Once we sort the array and check which element is missing, we can find the element.
+
+Approach
+Sort the array.
+Once sorted iterate through array
+check if i != nums[i] (it means the element is missing)
+return i if true.
+If the whole array is traversed and we found no element, then the nth digit is missing. So we return nums.length(n).
+
+Complexity
+Time complexity:
+nlogn for sorting(in-built sort method).
+n to traverse the array.
+Therefore nlogn + n ~ nlogn
+Space complexity:
+O(1)
+
+
+Code
+
+class Solution {
+    public int missingNumber(int[] nums) 
+    {
+        Arrays.sort(nums);
+
+        for(int i=0;i<nums.length; i++)
+        {
+            if(i != nums[i])
+                return i;
+        }
+
+        return nums.length;
+    }
+}
+------------------------------------------------------------------------------------------------------------------------------------------
+2nd Solution
+
+Intuition
+
+Optimal Solution
+We can find the missing element by using simple math formula of sum of n elements. (sum of n = (n*(n+1))/2 )
+
+Approach
+Find the sum of n elements using sum = (n*(n+1))/2, n being the length of array.
+Now, find the sum of elements in the array.
+The difference between the sum of n elements and sum of array elements is the missing digit.
+
+Complexity
+Time complexity:
+O(n) to find sum of array elements.  
+Space complexity:
+O(1)
+
+Code
+
+class Solution {
+    public int missingNumber(int[] nums) 
+    {
+        int n=nums.length;
+        int sum = (n*(n+1))/2;
+        int total=0;
+        for(int i=0; i<nums.length;i++)
+        {
+             total+=nums[i];
+        }
+
+        return sum-total;
+    }
+}
