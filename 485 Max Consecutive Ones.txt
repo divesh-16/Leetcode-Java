@@ -1,0 +1,49 @@
+Intuition
+We will traverse the array and maintain two counters.
+'prev' to store max count of consecutive 1's
+'cnt' which will count 1's consecutively and assign itself to 0 if zero is found.
+
+Approach
+If element nums[i] is 1 we increment cnt by 1 (cnt++)
+
+If it is not 1 then it will be 0, then we assign cnt to 0 (cnt = 0)
+
+At last we check if the current count(cnt) is greater than previous count(prev), if yes then we put greater value in prev counter (prev = cnt).
+
+At last we return 'prev' as it stores max length of consecutive 1's.
+
+Complexity
+Time complexity:
+O(n) to traverse the whole array.
+Space complexity:
+O(1) - requires constant space each time.
+
+
+Code
+class Solution {
+    public int findMaxConsecutiveOnes(int[] nums) 
+    {
+        int prev=0;
+        int cnt=0;
+
+        for(int i=0; i<nums.length; i++)
+        {
+            if(nums[i] == 1)
+            {
+                cnt++;
+                if(cnt>prev)
+                {
+                    prev = cnt;
+                }
+            }
+            else
+            {
+                cnt=0;
+            }     
+            
+        }
+
+
+        return prev;
+    }
+}
