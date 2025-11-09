@@ -1,0 +1,65 @@
+Intuition
+We sort the array and check elements in pair. If the pair is not matched; we found our unique element
+
+Approach
+We use two pointer 'i' starting from index 1 and 'p' staying one index behind 'i'. This tells us that nums[i] will be equal to nums[p] if they are same. If not it means nums[p] is unique.
+
+We start i = 1 and p = i-1, run a loop till array length, and iterate i by incrementing i by 2.(i+=2) As pair will we checked together.
+
+During traversing we if nums[p] == nums[i].
+
+if yes, we do nothing and continue.
+if no, we found our unique element in nums[p] and we store it in 'unique' variable. And we break the loop as we found our unique element.
+What if unique is not found from above and loop is terminated.
+
+It means the 'i' has reached length of array and loop is terminated throught i<nums.length condition.
+So the last element of array is the unique element.(nums[n-1])
+If above condition is not satisfied, it means loop is terminated by 'break' statement and we return 'unique'
+
+
+Complexity
+Time complexity:
+O nlogn - Time used by built-in sort method
+O(n) - To travel the array.
+Therefore O nlogn+n = n (log+1) ~ nlogn
+Space complexity:
+O(1) - As we require constant space for i,p and unique.
+
+
+
+Code
+class Solution {
+    public int singleNumber(int[] nums) 
+    {
+        if(nums.length==1)
+        {
+            return nums[0];
+        }
+        Integer unique=null;
+        Arrays.sort(nums);
+        
+        int i,p;    //To traverse array
+
+        for(i=1; i<nums.length; i+=2)
+        {
+            p=i-1;
+            if(nums[p] == nums[i])
+            {
+                continue;
+            }
+            else
+            {
+                unique = nums[p];
+                break;
+            }
+        }
+
+        if(i==nums.length && unique == null)
+        {
+            return nums[nums.length-1];
+        }
+
+        return unique;
+
+    }
+}
