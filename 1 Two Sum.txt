@@ -1,0 +1,49 @@
+Intuition
+Brute-force Approach
+We will keep one pointer at a particular index and one pointer one index ahead than before to check to sum of them meets target or not.
+
+Approach
+The first loop is used to keep one pointer fixed to an index to compare value for different indexes provided by 2nd nested loop.
+Nested loop starts one index ahead of outer loop.
+Here, we check sum of nums[i] and nums[j] is equal to target.If yes, we return index i and j.
+
+Complexity
+Time complexity:
+O(n*n) : As loop cantains loop.
+Space complexity:
+O(1) - Constant space.
+
+
+Code
+class Solution {
+    public int[] twoSum(int[] nums, int target) 
+    {
+        int ans[] = new int[2];
+
+
+        if(nums.length == 2 && (nums[0]+nums[1]) == target)
+        {   
+            return new int[] {0,1};
+        }
+
+        
+
+        for(int i=0; i<nums.length; i++)
+        {
+            for(int j=i+1; j<nums.length; j++)
+            {
+                int sum = nums[i] + nums[j];
+                if(sum == target)
+                {
+                    ans[0] = i;
+                    ans[1] = j;
+
+                    return ans;
+
+                }
+            }
+        }
+
+        return ans;
+    }
+}
