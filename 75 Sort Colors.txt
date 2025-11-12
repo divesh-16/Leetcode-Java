@@ -1,0 +1,76 @@
+Intuition
+First we will bring all the zeros in the first loop.
+Then we will bring all the 1's in second loop.
+2's will ultimately be sorted to their positions.
+
+
+Approach
+For the first loop,
+We will maintain a 'prev' pointer which will store 0's in 'prev' indexes.
+If we encounter zero in nums[prev] itself, we will not do anything. We will just continue and increment prev by one.
+If above condition is false, we will iterate through array to find zero. If we found a zero, then we will swap the nums[i](i.e zero) with nums[prev] (could be anything). And increment 'prev' pointer by one.
+We will continue till we reach the end of the array.
+Now that we have brought all the zeros first, we move to bringing all the 1's . We will follow the same approach to bring the 1's as we did for zeros.
+
+And after bringing all the 1's.
+2's will be ultimately be sorted to their positions.
+
+Complexity
+
+Time complexity:
+O(n) to sort zeros
+O(n) to sort ones
+Therefore, O(2n) ~ O(n)
+
+Space complexity:
+O(1) As constant space is required.
+
+
+Code
+class Solution {
+    public void sortColors(int[] nums) 
+    {
+        int prev=0;
+        int temp;
+
+        //Bring 0's first
+        for(int i = prev+1; i<nums.length; i++)
+        {
+            if(nums[prev] == 0)
+            {
+                prev++;
+                continue;
+            }
+
+            if(nums[i] == 0)
+            {
+                temp = nums[prev];
+                nums[prev] = nums[i];
+                nums[i] = temp;
+
+                prev++;
+            }
+
+        } 
+
+        // Bring 1's after 0's
+        for(int i = prev+1; i<nums.length; i++)
+        {
+            if(nums[prev] == 1)
+            {
+                prev++;
+                continue;
+            }
+
+            if(nums[i] == 1)
+            {
+                temp = nums[prev];
+                nums[prev] = nums[i];
+                nums[i] = temp;
+
+                prev++;
+            }
+
+        }    
+    }
+}
