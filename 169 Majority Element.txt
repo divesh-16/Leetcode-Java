@@ -1,0 +1,27 @@
+Intuition
+We Sort the array.
+Then we return the num[nums.length/2] element.
+
+Approach
+The majority element is the element that appears more than ⌊n / 2⌋ times
+If we try to understand this line at its core, it simply tells that the element appears on more than half indexes of an array.
+And to do that it(element) must appear at least on [n/2]+1(half+1) indexes. eg : n = 3, the element must appear more than 1 time.
+Therefore we return nums[n/2];
+Sorting the is essential before returning and finding the half of the array. Sorting aligns similar elements consecutively in array.
+
+Complexity
+Time complexity:
+O nlogn to sort the array.
+Space complexity:
+O(1)
+
+
+Code
+class Solution {
+    public int majorityElement(int[] nums) 
+    {
+        Arrays.sort(nums);
+
+        return nums[nums.length/2];
+    }
+}
