@@ -1,0 +1,57 @@
+Intuition
+We will maintain two variables to store
+sum of max-subarray - 'sum'
+current sum till that index. - 'tnum'
+
+Approach
+We will assign 'sum' to Integer.MIN_VALUE because it is the most minimum value we can send.
+
+And we assign 'tnum' to 0
+
+We start traversing the array, and we add the element iteratively to 'tnum'.
+
+During each iteration we check :
+
+Whether the 'tnum' is greater than 'sum', if it is we assign 'tnum' value 'sum' value. Why are we doing this, because to find max value from subarray.
+if(tnum < 0) This condition runs as magic, as we don't need to the send the subarray we just want the max sum.
+So whenever the 'tnum' becomes negative we assign it to zero
+Why zero, because a single element of an array is also called a sub-array. And we want the max sum; Therefore the single element can also be the max-subarray in an array.
+
+Complexity
+Time complexity:
+O(n) : As we iterate through whole array.
+Space complexity:
+O(1) : A constant space is required everytime.
+
+
+Code
+class Solution {
+    public int maxSubArray(int[] nums) 
+    {
+        if(nums.length == 1)
+        {
+            return nums[0];
+        }
+
+        int sum=Integer.MIN_VALUE;
+        int tnum=0;
+
+        for(int i=0; i<nums.length; i++)
+        {
+            tnum += nums[i];
+
+            if(tnum> sum)
+            {
+                sum = tnum;
+            }
+
+            if(tnum < 0)
+            {
+                tnum = 0;
+            }
+
+        }
+
+        return sum;
+    }
+}
