@@ -1,0 +1,75 @@
+Intuition
+In the First step we will find if there is any profit (any smaller number on the left of array and a larger number on right side of an array), if yes we move to 2nd step otherwise we return 0.
+In the 2nd step, we will find two things
+Whether to buy stock now.
+Whether bought stock sold now will be more profitable
+
+Approach
+Step 1 : We check whether we can find atleast 1 profit i.e a number which occurs to be smaller and presented early in array than a number larger and presented later in array.
+
+If yes, we break the loop
+If no, we continue.
+At last we check whether our iterator reaches length of array. If it does we return 0 .(It means all numbers occuring before are greater than numbers occuring after). Otherwise we move forward to find maxProfit.
+Step 2 : We initialize buy = Integer.MAX_VALUE. In each iteration we check whether the number is lesser than 'buy', if yes we then buy that stock at that price.
+
+Later we check, if bought stock price gives us maximum profit, if yes then we assign it to 'maxProfit'.
+After loop completes, we return maxProfit.
+
+Complexity
+Time complexity:
+O(n) for 1st loop
+O(n) for 2nd loop
+O(2n) ~ O(n)
+Space complexity:
+O(1)
+
+
+Code
+class Solution {
+    public int maxProfit(int[] prices) 
+    {
+        if(prices.length==1)
+        {
+            return 0;
+        }
+
+        int k,prev=0;
+        for(k=1; k<prices.length; k++)
+        {
+            if(prices[prev] > prices[k])
+            {
+                prev++;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if(prev==prices.length-1)
+        {
+            return 0;
+        }
+
+        int buy = Integer.MAX_VALUE;
+        int maxProfit = 0;
+        int currentProfit = 0;
+
+        for(int i=0; i<prices.length; i++)
+        {
+            if(prices[i] < buy)
+            {
+                buy = prices[i];
+            }
+
+            currentProfit = prices[i] - buy;
+
+            if(currentProfit > maxProfit)
+            {
+                maxProfit = currentProfit; 
+            }
+        }
+        
+        return maxProfit;
+    }
+}
