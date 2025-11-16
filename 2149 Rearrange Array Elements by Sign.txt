@@ -1,0 +1,97 @@
+Intuition
+We will maintain pointers.
+First pointer will be used to place positive integers on even indexes.
+Second pointer will be used to place negative integers on odd indexed.
+
+Approach
+We will create a new array with length same as nums. And place 'pos' pointer to 0 and 'neg' pointer to 1 to place intergers.
+We will start iterating through nums array.
+Whenever we encounter a positive number we place that in new array at position of 'pos' and increment pos by 2.
+Whenever we encounter a negative number we place that in new array at position of 'neg' and increment neg by 2.
+Once the whole array is traversed, we will return the new array.
+
+Complexity
+Time complexity:
+O(n) as we traverse the whole array.
+Space complexity:
+O(n) as we creating a new array to store elements.
+
+
+Code
+class Solution {
+    public int[] rearrangeArray(int[] nums) 
+    {
+        //Edge 1 - if array length is 2
+        if(nums.length == 2)
+        {
+            int a = nums[0];
+            int b = nums[1];
+
+            if(a > 0)
+            {
+                nums[0] = a;
+                nums[1] = b;
+            }
+            else
+            {
+                nums[0] = b;
+                nums[1] = a;
+            }
+
+            return nums;
+        }
+        /*
+        //Attempt 1 
+        int arr[] = new int[nums.length];
+        Queue<Integer> P = new LinkedList<>();
+        Queue<Integer> N = new LinkedList<>();
+
+        for(int i=0; i<nums.length; i++)
+        {
+            if(nums[i] > 0)
+            {
+                P.add(nums[i]);
+            }
+            else
+            {
+                N.add(nums[i]);
+            }
+        }
+
+        for(int i=0; i<nums.length; i++)
+        {
+            if(i % 2 == 0)
+            {
+                arr[i] = P.remove();
+            }
+            else
+            {
+                arr[i] = N.remove();
+            }
+        }
+
+        return arr;
+
+        */
+
+        //2nd Attempt
+        int arr[] = new int[nums.length];
+        int pos = 0;
+        int neg = 1;
+        for(int i=0; i<nums.length; i++)
+        {
+            if(nums[i] > 0)
+            {
+                arr[pos] = nums[i];
+                pos+=2;
+            }
+            else
+            {
+                arr[neg] = nums[i];
+                neg+=2;
+            }
+        }
+
+        return arr;
+    }
+}
