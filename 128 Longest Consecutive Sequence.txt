@@ -1,0 +1,80 @@
+Intuition
+The first thing which comes to mind when I here 'consecutive' is sorted elements. And the data structure which stores element in sorted order is TreeSet in Java.
+So, we will store the element in the TreeSet and find the length of consecutive elements presented in array.
+
+
+Approach
+Step 1 : Create TreeSet object.
+Step 2 : Store all element of array in the TreeSet.
+Step 3 : Once all elements are stored, initialize 'length' to 0 and 'max' to which wil maintain current length and maximum length.
+Step 4 : Iterate through the TreeSet
+First maintain 'prev' ; which will store previous consecutive element if found any.
+while iterating through TreeSet,
+we will check if prev element is just 1 less than current element. If yes increment length by 1.
+Else, we check whether the current length is greater than maximum(max). If yes we assign max to length. (max = length) and length to 1.
+Else we just assign length = 1.
+Step 5 : Check if current length is greater than maximum, if yes then return current length.
+Step 6 : We found our maximum, just return 'max' variable.
+
+
+Complexity
+Time complexity:
+O(n) to traverse array.
+O(n) to traverse TreeSet
+Therefore O(2n) ~ O(n)
+Space complexity:
+O(n) as we creating TreeSet with n elements
+
+
+Code
+class Solution {
+    public int longestConsecutive(int[] nums) 
+    {
+       if(nums.length ==0)
+        {
+            return 0;
+        }
+        int n=nums.length;
+        TreeSet<Integer> ts = new TreeSet<>();
+        for(int i=0; i<n; i++)
+        {
+            ts.add(nums[i]);
+        }
+
+        int length = 1;
+        int max = 1;
+
+        Iterator it = ts.iterator();
+        int prev =(int) it.next();
+       // System.out.print(" "+prev);
+        while(it.hasNext())
+        {
+            int element = (int)it.next();
+            if(prev+1 == element)
+            {
+                length++;
+            }
+            else if(length > max)
+            {
+                max = length;
+                length=1;
+            }
+            else
+            {
+                length = 1;
+            }
+            
+
+            prev = element;
+            //System.out.print(" "+element);
+            
+        }
+   
+        if(length > max)
+        {
+            max = length;
+        }
+        
+        return max;
+    }
+}
