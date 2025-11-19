@@ -1,0 +1,94 @@
+Intuition
+if an element is 0, set its entire row and column to 0's.
+So we are needing value of both the indexes row('i') and column('j').
+Therefore we are going to create a data structure which stores value of i and j in a List.
+
+Approach
+Create Data structure which 'Indexes' which stores value of 'i' and 'j' when a zero is encounter.
+Put this data structure in the List.
+Once we found all the zero's and their indexes we now move to set the row and columns.
+We iterate through list, get the indexes 'i' and 'j'
+we need only to loops to.
+One which will assign zeros on rows(for(int k=0; k<n; k++) matrix[i][k] = 0)
+one which assign zeros on column(for(int k=0; k<m; k++) matrix[k][j] = 0).
+
+Complexity
+Time complexity:
+O(n*n) : To find zeros in the matrix.
+O(n*2n) : To set zeros on rows and columns.
+Space complexity:
+O(n) : Depends on zeros we find in the matrix
+
+
+Code
+import java.util.*;
+/*
+    To store i,j we need a structure which will provide medium to store i,j
+    Due to i,j are not unique we cannot use map or hash-table
+
+    So I create a class Indexes which will store value of i,j.
+
+    Then through Linkedlist I add indexes(positions) where 0 is found
+*/
+
+class Indexes
+{
+    int i,j;
+
+    Indexes(int i,int j)
+    {
+        this.i=i;
+        this.j=j;
+    }
+
+    int getI()
+    {
+        return this.i;
+    }
+
+    int getJ()
+    {
+        return this.j;
+    }
+}
+
+class Solution {
+    public static void setZeroes(int[][] matrix) 
+    {
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        List<Indexes> list = new ArrayList<Indexes>();
+
+        for(int i=0; i<m; i++)
+        {
+            for(int j=0; j<n; j++)
+            {
+                if(matrix[i][j] == 0)
+                {
+                    list.add(new Indexes(i,j));   
+                }
+            }
+        }
+
+       for(Indexes ob1 : list)
+       {
+            int i = ob1.getI();
+            int j = ob1.getJ();
+            
+            //Logic to make row in zeros
+            for(int k=0; k<n; k++)
+            {
+                matrix[i][k] = 0;
+            }
+
+            //Logic to make column in zeros
+            for(int k=0; k<m; k++)
+            {
+                matrix[k][j] = 0;
+            }
+
+          
+       }
+    }   
+}
