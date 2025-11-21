@@ -1,0 +1,79 @@
+Intuition
+We will iterate through array and for each sub-array we will check if the sum if equal to given 'k'
+
+Approach
+To check each sub-array, we will run two loops (nested loop), where each loop will run till n.
+Maintain a counter(cnt) which counts sub-array sum equal to k.
+Start iterating through array using 'i' staring from 0.
+if element is equal to k, simply increment cnt.
+run a nested loop, starting j from i+1. (j=i+1). This determines sub-array from i.
+Now in this loop we check if sub-array sum is equal to k after adding each element to 'sum'
+
+
+Complexity
+Time complexity:
+We run a nested loop, so O(n*n)
+Space complexity:
+O(1)
+
+
+Code
+class Solution 
+{
+/*
+    int cnt = 0;
+    public void subarray(int i,int sum,int arr[], int k,int n)
+    {
+        if(i == n)
+        {
+            return;
+        }
+
+        sum += arr[i];
+        if(sum == k)
+        {
+            cnt++;
+        }
+        subarray(i+1,sum,arr,k,n);
+       
+    }
+*/
+    public int subarraySum(int[] nums, int k) 
+    {
+        if(nums.length==1 && k == nums[0])
+        {
+            return 1;
+        }
+
+        // First Attempt
+        int n=nums.length;
+        int cnt=0;
+
+        for(int i=0; i<n ;i++)
+        {
+            int sum = nums[i];
+            if(sum == k)
+            {
+                cnt++;
+            }
+            for(int j=i+1; j<n; j++)
+            {
+    
+                sum = sum + nums[j];
+                if(sum == k)
+                {
+                    cnt++;
+                }
+            }
+        }
+
+        return cnt;
+
+        // for(int i=0; i<nums.length; i++)
+        // {
+        //     subarray(i,0,nums,k,nums.length);
+        // }
+
+        // return cnt;
+    }
+}
