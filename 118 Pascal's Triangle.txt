@@ -1,0 +1,65 @@
+Intuition
+In Pascal's triangle, each number is the sum of the two numbers directly above.
+
+Approach
+Algorithm
+Step 1 : We create List of list which will store the rows. This is important because to get the series of pascal's triangle, the series depends on "the previous rows two numbers".
+Step 2 : Get 'n' as number of rows. Till which row we need to generate the series.
+Step 3 : We run a loop from 1 to n using interator 'i'.
+Step 4 :
+If the i is 1 then it very first row of triangle, so we directly add first row with '1'
+In every iteration we use previous generated rows, which is stored in List of list. (List list = parent.get(i-2))
+Now we run (using 'j' as iterator) a loop which will generate a row and run till row's length(i.e 'i')
+Now that we have previous generated row, we simply add two numbers from previous list and add it the new list.
+Remember, Pascal's Triangle first and last digit is always one. So if 'j' value is 1 or equal to 'i' we simply add 1 to list.
+To get two elements from previous list, we maintain a 'prev' pointer and 'current'(orev+1) pointer. Sum of elements on these indexes will be added to list. And 'prev' will incremented by one.
+
+Complexity
+Time complexity:
+O(n*m) to create rows and columns.
+Space complexity:
+O(n*m) to create rows and columns.
+
+
+Code
+class Solution {
+    public List<List<Integer>> generate(int numRows) 
+    {
+        int n = numRows;
+        List<List<Integer>> parent = new LinkedList<>();
+        
+        for(int i=1 ; i<=n; i++)
+        {
+            int prev=0;
+            List<Integer> child = new LinkedList<Integer>();
+            if(i==1)
+            {
+                child.add(1);
+                parent.add(child);
+                continue;
+            }
+
+            List<Integer> list = parent.get(i-2);
+
+            for(int j=1; j<=i; j++)
+            {
+                if(j==1 || j==i)
+                {
+                    child.add(1);
+                }
+                else
+                {
+                    
+                    int current = prev+1;
+                    int sum = list.get(prev) + list.get(current);
+                    child.add(sum);
+                    prev++;
+                   
+                }
+            }
+
+            parent.add(child);
+        }
+        return parent;  
+    }
+}
