@@ -1,0 +1,49 @@
+Intuition
+We will count the occurrences of each element in the array.
+The elements which have more than n/3 occurrence will be stored in the list.
+
+Approach
+We will use a Map or HashTable to count the element of the array.
+Then we will get the count of each element and check whether the count of element is greater than n/3.
+If yes, we simply add this element to our answer list.
+
+Complexity
+Time complexity:
+O(n) to store element's count in map.
+O(n) to store elements in the list.
+O(2n) ~ O(n)
+Space complexity:
+O(n) to store count in map.
+
+
+Code
+class Solution {
+    public List<Integer> majorityElement(int[] nums)
+    {
+        int n = nums.length;
+        int major = n/3;
+
+        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+        int count=0;
+        for(int key : nums)
+        {
+            map.put(key,map.getOrDefault(key,0)+1);    
+        }
+
+        List list = new ArrayList<Integer>();
+        Set<Integer> S = map.keySet();
+        for(Integer k : S)
+        {
+            
+           if(map.get(k) > major)
+           {
+                list.add(k);
+           }
+           
+           //System.out.println(k + " "+ht.get(k));
+        }
+
+        return list;
+        
+    }
+}
