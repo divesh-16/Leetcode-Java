@@ -1,0 +1,48 @@
+Intuition
+Binary Search Algorithm
+
+Approach
+If array is sorted, then binary search is optimal solution
+Step 1 : Get lower bound(lb) and upper bound(ub) of the array, which is going to determine the middle(mid) of the array.
+Step 2 : Once you get the mid, element might be at middle index so just return the element.
+Step 3 : If element is not at mid index then it might be at left of the middle index. i.e the target less than element at mid index.
+In this situation we bring upper bound to mid-1 and move to Step 1 again.
+Step 4 : If above is not the case then definitely is on right from middle. i.e the target larger than element at mid index.
+In this situation we bring lower bound to mid+1 and move to Step 1 again.
+Step 5 : If element is found it will be return through the loop. Otherwise the loop ends (i.e lb becomes larger than upper bound) and we return -1.
+
+Complexity
+Time complexity:
+O(log n) for binary search. As we ignoring one half of array at each iteration.
+Space complexity:
+O(1) Constant space.
+
+
+Code
+class Solution {
+    public int search(int[] nums, int target) 
+    {
+       int lb = 0;
+       int ub = nums.length-1;
+
+       while(lb<=ub)
+       {
+            int mid = (lb+ub)/2;
+
+            if(nums[mid] == target)
+            {
+                return mid;
+            }
+            else if(target < nums[mid])
+            {
+                ub = mid-1;
+            }
+            else
+            {
+                lb = mid + 1;
+            }
+       }
+
+       return -1;
+    }
+}
