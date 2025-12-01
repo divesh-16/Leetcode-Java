@@ -1,0 +1,81 @@
+Intuition
+  We will use binary search twice, first for first position and second for last position.
+
+Approach
+  Step 1 : Assign array with length 2 to zero.
+  Step 2 : Find first position of Element in array using binary search.
+  If we found the element, we store the index in index[0] and continue moving left of array to find first occurrence.
+  We will continue till lower bound exceeds upper bound.
+  Step 3 : Find last position of element in array using binary search.
+  Again we iterate through till lower bound exceeds upper bound.
+  But when we found the element, we store the index in index[1] and continue moving right of array (instead of left, to find higher index) to find last occurrence of element.
+
+Complexity
+  Time complexity:
+  O(log n) for first binary search.
+  O(log n) for second binary search.
+  O(2 log n) ~ O(log n)
+
+  Space complexity:
+  O(1) constant space space for array.
+
+
+Code
+class Solution 
+{
+
+    public int[] searchRange(int[] nums, int target) 
+    {
+        int index[] = new int[2];
+        index[0] = -1;
+        index[1] = -1;
+        int lb = 0;
+        int ub = nums.length-1;
+        int mid = -1;
+
+        while(lb<=ub)
+        {
+            mid = (lb+ub)/2;
+
+            if(nums[mid] == target)
+            {
+                index[0] = mid;
+            }
+
+            if(target <= nums[mid])
+            {
+                ub = mid -1;
+            }
+            else
+            {
+                lb = mid + 1;
+            }
+        }
+
+        lb = 0;
+        ub = nums.length-1;
+
+        while(lb<=ub)
+        {
+            mid = (lb+ub)/2;
+
+            if(nums[mid] == target)
+            {
+                index[1] = mid;
+            }
+
+            if(target >= nums[mid])
+            {
+                lb = mid + 1;
+                
+            }
+            else
+            {
+                ub = mid -1;
+            }
+        }
+
+
+        return index;
+    }
+}
