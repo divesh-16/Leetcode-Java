@@ -1,0 +1,43 @@
+Intuition
+We use Binary search to solve this question.
+
+Approach
+We will binary search algorithm.
+Step 1 : If the element is found we will return 'mid' index
+Step 2 : Otherwise the loop will end due to lower bound becoming greater than upper bound and lower bound will be placed where our element should be if it existed. So just return lower bound if not found.
+
+Complexity
+Time complexity:
+O(log n) : Binary search
+Space complexity:
+O(1)
+
+Code
+class Solution {
+    public int searchInsert(int[] nums, int target) 
+    {
+        int lb = 0;
+        int ub = nums.length-1;
+        int mid = -1;
+        while(lb<=ub)
+        {
+            mid = (lb + ub) /2;
+            if(nums[mid] == target)
+            {
+                return mid;
+            }
+            else if(nums[mid] > target)
+            {
+                ub = mid-1;
+            }
+            else
+            {
+                lb = mid+1;
+            }
+
+        }
+
+        return lb;
+
+    }
+}
