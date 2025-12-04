@@ -1,0 +1,76 @@
+Intuition
+Copy the next element in current node till node's next is not equal to null .
+Delete the last node.
+
+Approach
+Step 1: Start from the node.
+Step 2 : Run a loop till node.next is not equal to null.
+Step 3 : Keep a pointer(S) which saves previous node address
+Step 4 : Copy node.next value in node.val and iterate node to node.next;
+Like this we have copied the node value to all previous nodes, now we just have to delete the last node. Here the previous pointer(S) is just one node behind last; so we delete the link between them. (S.next = null)
+
+Complexity
+Time complexity:
+O(n) to copy n elements;
+Space complexity:
+O(1) constant space
+
+Code
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public void deleteNode(ListNode node) 
+    {
+        //Attempt one
+        
+        ListNode s = null;
+        while(node.next!=null)
+        {
+            s = node;
+            node.val = node.next.val;
+            node = node.next;
+        } 
+        s.next=null;
+        
+    }
+}
+
+
+
+Intuition
+The second solution is the about knowing the basics and understanding the question at its core.
+
+Approach
+We just have to remove one node, so we copy node.next's value in node' value.
+Now that we have two value similar, we can just delete node.next by referring to node.next = node.next.next;
+Like this we are coping only one value and deleting the current node's next by refering to next's next.
+
+Complexity
+Time complexity:
+O(1) constant time will require run these two statements.
+Space complexity:
+O(1) constant space
+
+Code
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public void deleteNode(ListNode node) 
+    {
+
+        node.val = node.next.val;
+        node.next = node.next.next;  
+    }
+}
