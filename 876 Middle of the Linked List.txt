@@ -1,0 +1,42 @@
+Intuition
+We will use strategy of hare(fast pointer) and tortoise(slow pointer)
+
+Approach
+Step 1 : Both hare and tortoise starts at head(here T,S respectively). Hare will move 2 steps(nodes) at a time and tortoise will move 1 step at a time.
+End the loop when hare becomes null or hare's next is null.
+Step 2 : Return tortoise(here S), as it will be placed in middle of linked list.
+
+Complexity
+Time complexity:
+O(n) to travel the list.
+Space complexity:
+O(1) constant space
+
+Code
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+class Solution {
+    public ListNode middleNode(ListNode head) 
+    {
+        ListNode S,T;
+        S=head;
+        T=head;
+
+        while(T!=null && T.next !=null)
+        {
+            T = T.next.next;
+            S = S.next;
+        }
+
+        return S;
+    }
+}
