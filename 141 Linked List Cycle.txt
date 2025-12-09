@@ -1,0 +1,54 @@
+Intuition
+We use fast and slow pointer technique
+
+Approach
+Step 1 : Assign both fast and slow pointer to the head linkedlist
+Step 2 : Run the till fast becomes null or fast's next is null
+- iterate fast by 2 nodes
+- iterate slow by 1 node
+Step 3 : If there is a cycle then these two pointers will be stuck in the cycle and there will be a time where both the pointers will point to the same. If they both point to same node then return true.
+Otherwise the loop will be terminated by null condition, so return false.
+
+Complexity
+Time complexity:
+O(n) to travel whole list
+Space complexity:
+O(1) constant space.
+
+
+Code
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public boolean hasCycle(ListNode head)
+    {
+        if(head==null || head.next==null)
+        {
+            return false;
+        }
+
+        ListNode T=head,S=head;
+        while(T!=null && T.next!=null)
+        {
+            T = T.next.next;
+            S = S.next;
+
+            if(T==S)
+            {
+                return true;
+            }
+        }
+
+        return false;
+        
+    }
+}
