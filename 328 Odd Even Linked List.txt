@@ -1,0 +1,86 @@
+Intuition
+We will create two new linked lists.
+One will store nodes on odd indices and other will store nodes on even indices
+
+Approach
+Step 1 : Maintain a counter which will tell which index the current node is at.
+Step 2 : If the counter is odd, then add it to odd list.
+Step 3 : If the counter is even, then add it to even list.
+Step 4 : Make a connection between the odd list's last node and even list's first node
+Step 5 : return odd list head;
+
+Complexity
+Time complexity:
+O(n) to traverse the whole list.
+Space complexity:
+O(n) to make new nodes.
+
+
+Code
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode oddEvenList(ListNode head) 
+    {
+        if(head == null)
+        {
+            return null;
+        }
+        ListNode oFirst = null, oLast=null;
+        ListNode eFirst = null, eLast=null;
+        int cnt=1;
+        
+        for(ListNode T = head; T!=null; T=T.next)
+        {
+            if(cnt%2==0)
+            {
+                if(eFirst==null)
+                {
+                    eFirst = new ListNode(T.val);
+                    eLast = eFirst;
+                    cnt++;
+                }
+                else
+                {
+                     ListNode S = new ListNode(T.val);
+                    eLast.next = S;
+                    eLast = eLast.next;
+                    cnt++;
+                }
+
+               
+            }
+            else
+            {
+                if(oFirst==null)
+                {
+                    oFirst = new ListNode(T.val);
+                    oLast = oFirst;
+                    cnt++;
+                }
+                else
+                {
+                    ListNode S = new ListNode(T.val);
+                    oLast.next = S;
+                    oLast = oLast.next;
+                    cnt++;
+                }
+
+                
+            }
+        }
+
+        //Joining Two Lists
+        oLast.next = eFirst;
+
+        return oFirst;
+    }
+}
