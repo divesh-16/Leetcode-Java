@@ -1,0 +1,71 @@
+Intuition
+Count the nodes in list, then substract the 'n' from count .
+The answer found is the index at which we need to delete the node.
+
+Approach
+Step 1 : Count the number of nodes in the list.
+Step 2 : find the index of the node to be deleted (i.e index = count-n)
+Step 3 : Go to the node at index by keeping the pointer of previous pointer.
+Step 4 : Once at the desired node, use previous(i.e S) the delete the current node and break the loop.
+Step 5 : Return the head of the list.
+
+Complexity
+Time complexity:
+O(n) to travel linked list.
+Space complexity:
+O(1) constant space.
+
+Code
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) 
+    {
+        if(head==null || head.next==null && n==1)
+        {
+            return null;
+        }
+
+        int cnt=0;
+        ListNode T=head,S=head;
+        // S to Store previous address/reference
+        while(T!=null)
+        {
+            cnt++;
+            T=T.next;
+        }
+
+        int index = cnt - n;
+        // If n and count is equal, it means remove first node.
+        if(index == 0)
+        {
+            T=head;
+            head = head.next;
+            T.next=null;
+            return head;
+            
+        }
+        T=head;
+        for(int i=1; i<cnt; i++)
+        {
+            T = T.next;
+            if(i==index)
+            {
+                S.next = T.next;
+                T.next = null;
+                break;
+            }
+            S = T;
+        }
+
+        return head;
+    }
+}
