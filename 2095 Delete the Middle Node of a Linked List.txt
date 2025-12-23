@@ -1,0 +1,51 @@
+Intuition
+We use hare and tortoise technique to find the middle and then delete the middle node.
+
+Approach
+Step 1 : Find the middle using hare and tortoise technique.(where hare moves two nodes at a time and tortoise moves 1 node at a time.)
+And before moving the tortoise to next, keep its address in another pointer (i.e P)
+Step 2 : Once the loop terminates, we will find the middle in tortoise and we have maintained the previous pointer of tortoise. So we just delete the middle the middle by pointing previous's next(P.next) to tortoise next.
+Also assign tortoise's next to null
+Step 3 : Return head;
+
+Complexity
+Time complexity:
+O(n) to travel the linked list.
+Space complexity:
+O(1) constant space.
+
+Code
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteMiddle(ListNode head)
+    {
+        if(head.next == null)
+        {
+            head = null;
+            return head;
+        }
+        ListNode T=head,S=head,P=head;
+
+        while(T!=null && T.next !=null)
+        {
+            T = T.next.next;
+            P=S;
+            S = S.next;
+        }
+
+        P.next = S.next;
+        S.next = null;
+
+        return head;
+
+    }
+}
