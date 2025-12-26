@@ -1,0 +1,128 @@
+Intuition
+We have two solution to this problem,
+1st using set
+2nd using stacks.
+
+Approach 1 Using set
+Step 1 : Create a Set and store all elements(i.e nodes) of 1st list in the set.
+Step 2 : Now, store the elements of 2nd list in the set. But before storing check if the element is presented in the list of not.
+If the element is present, we got the intersection. So just return the element.
+Otherwise just add the element in the set.
+Step 3 : If the whole 2nd list is traversed and the intersected node is not found then return null.
+
+Complexity
+Time complexity:
+O(n) to travel 1st list.
+O(n) to travel 2nd list.
+O(2n) ~ O(n)
+Space complexity:
+O(n) to store elements in the set.
+
+Code
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) 
+    {
+        
+        // Attempt 1
+        Set<ListNode> set = new HashSet<>();
+
+
+        ListNode T = headA;
+        while(T!=null)
+        {
+            set.add(T);
+            T = T.next;
+        }
+        ListNode S = headB;
+        while(S!=null)
+        {
+            if(set.contains(S))
+            {
+                return S;
+            }
+            set.add(S);
+            S = S.next;
+        }
+
+        return null;       
+     }
+}
+
+
+
+
+Approach 2 using Stacks
+Step 1 : Creat two stacks
+One to store 1st list elements.(stk1)
+Another to store 2nd list elements.(stk2)
+Step 2 : Now that elements are stored in the stacks, start popping element based on following conditions
+stack1 (stk1) should not be empty
+stack2 (stk2) should not be empty
+top element of both the stack should be equal.
+Step 3 : While popping the elements, maintain a 'temp' which will store the previous popped element.
+Step 4 : Return temp
+Note : The loop will terminate because the top element of both the stack are not equal, which means two separate list have start here. Therefore the element before this point was the intersection point.
+
+Complexity
+Time complexity:
+O(n) to travel 1st list
+O(n) to travel 2nd list
+O(n) to travel 2 stacks
+O(3n) ~ O(n)
+Space complexity:
+O(n) to store elements in stacks.
+
+Code
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) 
+    {
+
+        // Attempt 2 : Using stack.
+
+        Stack<ListNode> stk1 = new Stack<>();
+        Stack<ListNode> stk2 = new Stack<>();
+
+        while(headA != null)
+        {
+            stk1.push(headA);
+            headA = headA.next;
+        }
+
+        while(headB != null)
+        {
+            stk2.push(headB);
+            headB = headB.next;
+        }
+
+        ListNode temp = null;
+        while(!stk1.isEmpty() && !stk2.isEmpty() && stk1.peek() == stk2.peek())
+        {
+            temp = stk1.pop();
+            stk2.pop();
+        }
+
+        return temp;
+     }
+}
