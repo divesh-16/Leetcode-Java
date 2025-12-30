@@ -1,0 +1,91 @@
+Intuition
+We run a reverse linked list logic number of nodes divided by k times. (i.e nodeCnt/k times)
+
+Approach
+Step 1 : We start at the head and count the number of nodes in the list. Store it in nodeCnt. Divide the nodeCnt with k and we will get the number of groups to rotate.
+Step 2 : Maintain first and last pointer. First pointer will point to answer list head. The last pointer will point to last rotated list's last node.
+Step 3 : Run a loop till the number of groups are rotated (i.e cnt <= reverseCnt>)
+In the loop we are simply reversing the nodes till 'k'
+Once the k nodes are reversed, link the reversed list last to remaining list.
+if there is a previous reversed lists, attach the last reversed list to current reversed list. (last.next = R)
+Point the last pointer tp current list's last node. (last = P)
+increment the count (cnt ++)
+If the first is null point it to first reversed list's head.(first = R)
+Step 4 : Return first pointer.
+
+Complexity
+Time complexity:
+O(n) to count the number of nodes.
+Even there are two loops to reverse the list in k groups, the traversing happens linearly, so the travers happens in O(n) time.
+Therefore O(2n) ~ O(n)
+Space complexity:
+O(1) constant space used for extra pointers.
+
+Code
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) 
+    {
+        if(head==null)
+        {
+            return null;
+        }    
+
+        ListNode T=head;
+        int nodeCnt = 0;
+        while(T!=null)
+        {
+            T = T.next;
+            nodeCnt++;
+        }
+
+        int reverseCnt = nodeCnt/k;
+
+        T = head;// Reassign T to head;
+        ListNode last=null,first=null;
+        int cnt = 1; //
+        while(T!=null && cnt<=reverseCnt)
+        {
+            int rotate = k;
+            ListNode Q = T,S=null,R=null,P=null;
+
+            while(rotate>0)
+            {
+                S = Q;
+                Q = Q.next;
+                T = T.next;
+                S.next = R;
+                R = S;
+                if(R.next==null)
+                {
+                    P = R;
+                }
+                rotate--;
+            }
+
+            P.next = T;
+            if(last!=null)
+            {
+                last.next = R;
+            }
+            last = P;
+            cnt++;
+            if(first==null)
+            {
+                first = R;
+            }
+        }
+
+        return first;
+
+    }
+}
