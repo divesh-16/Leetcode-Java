@@ -1,0 +1,85 @@
+Intuition
+Join length-k-1 nodes to head of linked list.
+
+Approach
+Step 1 : Count the length of nodes in the linked list.
+Step 2 : Reduce K to K % length.(k = k%length)
+Step 3 : Move to length-k-1 position node. (This node will be the head the rotated list). And maintain a pointer to previous node to this node. Store this node's pointer to return as ans.
+Step 4 : Break the link through previous pointer
+Step 5 : Continue to find the last node of the linked list, once the last node is found, join the last node to head of linked list.
+Step 6 : Return the node which we stored in Step 3.
+
+
+Complexity
+Time complexity:
+O(n) to traverse the linked list.
+Space complexity:
+O(1) space complexity.
+
+
+Code
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) 
+    {
+        if(head == null)
+        {
+            return null;
+        }
+
+        if(k==0)
+        {
+            return head;
+        }
+
+        if(head.next == null)
+        {
+            return head;
+        }
+
+        ListNode T=head,S=null;
+        int length=0;
+        while(T!=null)
+        {
+            length++;
+            T = T.next;
+        }
+        k = k % length;
+
+        if(k == 0)
+        {
+            return head;
+        }
+
+        T = head;
+        int jump = length - k - 1;
+ 
+        while(T!=null && jump>=0)
+        {
+            S = T;
+            T = T.next;
+            jump--;
+        }
+
+        S.next = null;
+        ListNode P = T;
+        while(P!=null)
+        {
+            S = P;
+            P = P.next;
+        }
+
+        S.next = head;
+
+        return T;
+    }
+}
