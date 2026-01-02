@@ -1,0 +1,63 @@
+Intuition
+Store the newly created nodes in hash table/map with its original copy
+
+Approach
+Step 1 : Create a hash map / table which stores current node and newly created node based on current node.
+Step 2 : Create nodes while traversing the list and assign node's next and random to null.
+Step 3 : After creating the node, store the current node and newly created node in the map/table.
+Step 4 : Now, start from head again. Get the mapped node (Y) with get current node. Assign node's next (Y.next ) to current node's next in map. In same way, assign node's random to current node's random in map. Like this the whole list will be made with random pointers.
+return map's node mapped to head pointer.
+
+Complexity
+Time complexity:
+O(n) to traverse the list.
+Space complexity:
+O(n) store nodes in the hash map/table.
+
+Code
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    public Node copyRandomList(Node head) 
+    {
+        Map<Node,Node> map = new HashMap<>();
+
+        Node T = head;
+
+        while(T!=null)
+        {
+            Node Y = new Node(T.val);
+            Y.next = null;
+            Y.random = null;
+            map.put(T,Y);
+
+            T = T.next;
+        }
+
+        T = head;
+
+        while(T != null)
+        {
+            Node Y = map.get(T);
+            Y.next = map.get(T.next);
+            Y.random = map.get(T.random);
+
+            T = T.next;
+        }
+
+        return map.get(head);
+    }
+}
