@@ -1,0 +1,84 @@
+Intuition
+Approach
+In Recurive version, stack is required to remember the current node so that after completing the left subtrees, we can go to right subtrees.
+Similarly in Iterative we simulate the same.
+Process the current node and before going to left, we store curr-node in stack.
+After completing left processing , we pop the element
+And process the right
+Continue till stack is empty.
+
+Complexity
+Time complexity:
+O(n) to reach each and every node.
+Space complexity:
+O(n) Auxiliary stack. (Both in recursive and iterative approach)
+
+
+Code
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public void preorder(TreeNode T,List<Integer> list)
+    {
+        if(T==null)
+        {
+            return;
+        }
+        else
+        {
+            list.add(T.val);
+            preorder(T.left,list);
+            preorder(T.right,list);
+        }
+    }
+
+    public void preorderIterative(TreeNode root,List<Integer> L)
+    {
+        if(root == null )
+        {
+            return;
+        }
+
+        Stack<TreeNode> stk = new Stack<>();
+        stk.push(root);
+
+        while(!stk.isEmpty())
+        {
+            TreeNode T = stk.pop();
+            L.add(T.val);
+
+            if(T.right != null)
+            {
+                stk.push(T.right);
+            }
+
+            if(T.left != null)
+            {
+                stk.push(T.left);
+            }
+        }
+    }
+
+    public List<Integer> preorderTraversal(TreeNode root) 
+    {
+        List<Integer> list = new LinkedList<>();
+        preorderIterative(root,list);
+
+        return list;
+        
+    }
+}
