@@ -1,0 +1,93 @@
+Intuition
+Follow LDR pattern - Left,Data,Right
+
+Approach
+
+Complexity
+Time complexity:
+O(n) to traverse the n nodes.
+Space complexity:
+O(n) to auxiliary stack in both recursive and iterative approach.
+
+Code
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public void inorder(TreeNode T,List<Integer> list)
+    {
+        if(T==null)
+        {
+            return;
+        }
+        else
+        {
+            inorder(T.left,list);
+            list.add(T.val);
+            inorder(T.right,list);
+        }
+    }
+
+    public void inorderIterative(TreeNode root,List<Integer> L )
+    {
+        /* 
+            - It is similar to preorder Iterative.
+            - The only change is instead of processing the node before and going to left subtree,
+            - Process it after popping.
+            (Which is indicated after completion of left subtree.) 
+        */
+
+        if(root == null)
+        {
+            return;
+        }
+
+        Stack<TreeNode> stk = new Stack<>();
+        boolean done = false;
+        TreeNode curr = root;
+
+        while(!done)
+        {
+            if(curr != null)
+            {
+                stk.push(curr);
+                curr = curr.left;
+            }
+            else
+            {
+                if(stk.isEmpty())
+                {
+                    done = true;
+                }
+                else
+                {
+                    curr = stk.pop();
+                    L.add(curr.val);
+                    curr = curr.right;
+                }
+            }
+        }
+
+    }
+
+    public List<Integer> inorderTraversal(TreeNode root) 
+    {
+        List<Integer> list = new LinkedList<>();
+        inorderIterative(root,list);
+
+        return list;
+    }
+}
