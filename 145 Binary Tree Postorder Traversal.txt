@@ -1,0 +1,95 @@
+Intuition
+Follow LRD pattern : Left,Right,Data
+
+Approach
+
+Complexity
+Time complexity:
+O(n) to traverse the n nodes in the tree.
+Space complexity:
+O(n) for auxiliary stack
+
+Code
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public void postorder(TreeNode T, List<Integer> list)
+    {
+        if(T==null)
+        {
+            return;
+        }
+        else
+        {
+            postorder(T.left,list);
+            postorder(T.right,list);
+            list.add(T.val);
+        }
+    }
+
+    public void postorderNonRecursive(TreeNode root,List<Integer> L )
+    {
+        if(root == null)
+        {
+            return;
+        }
+
+        Stack<TreeNode> stk = new Stack<>();
+        stk.push(root);
+        TreeNode prev = null;
+
+        while(!stk.isEmpty())
+        {
+            TreeNode curr = stk.peek();
+            if(prev == null || prev.left == curr || prev.right == curr)
+            {
+                if(curr.left != null)
+                {
+                    stk.push(curr.left);
+                }
+                else if(curr.right != null)
+                {
+                    stk.push(curr.right);
+                }
+
+            }
+            else if(curr.left == prev)
+            {
+                if(curr.right != null)
+                {
+                    stk.push(curr.right);
+                }
+            }
+            else
+            {
+                L.add(curr.val);
+                stk.pop();
+            }
+
+            prev = curr;
+        }
+    }
+    
+    public List<Integer> postorderTraversal(TreeNode root) 
+    {
+        List<Integer> list = new LinkedList<>();
+
+        postorderNonRecursive(root,list);
+
+        return list;
+    }
+}
