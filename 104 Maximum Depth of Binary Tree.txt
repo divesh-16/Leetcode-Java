@@ -1,0 +1,207 @@
+Intuition
+Three approaches to tackle this problem.
+
+Approach 1 : Recursive
+Step 1 : We use postorder traversal technique. We return 0 if tree root is null.
+Step 2 : We get height of left subtree and right subtree, then return max of both with plus 1 (current node) to parent node.
+
+Complexity
+Time complexity:
+O(n) to travel all nodes
+Space complexity:
+O(n) for auxiliary stack
+
+Code
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public int maxDepth(TreeNode root) 
+    {
+        if(root==null)
+        {
+            return 0;
+        }
+        else
+        {
+            int lh = maxDepth(root.left);
+            int rh = maxDepth(root.right);
+
+            if(lh > rh)
+            {
+                return lh + 1;
+            }
+            else
+            {
+                return rh + 1;
+            }
+        }
+    }
+}
+
+
+
+Approach 2 : Using stack
+In this we are basically iteratively traversing the tree using stack.
+And while traversing the, we check if stack's is greater than max
+If yes, we assign max to stack's size.
+
+Complexity
+Time complexity:
+O(n) to travel all nodes
+Space complexity:
+O(n) for auxiliary stack
+
+Code
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public int maxDepth(TreeNode root) 
+    {
+       if(root == null)
+        {
+            return 0;
+        }
+
+        Stack<TreeNode> stk = new Stack<>();
+        stk.push(root);
+        int max = 0;
+        TreeNode prev = null;
+
+        while(!stk.isEmpty())
+        {
+            TreeNode curr = stk.peek();
+
+            if(prev == null || prev.left == curr || prev.right == curr)
+            {
+                if(curr.left != null)
+                {
+                    stk.push(curr.left);
+                }
+                else if(curr.right != null)
+                {
+                    stk.push(curr.right);
+                }
+            }
+            else if(curr.left == prev)
+            {
+                if(curr.right != null)
+                {
+                    stk.push(curr.right);
+                }
+            }
+            else
+            {
+                stk.pop();
+            }
+            prev = curr;
+            if(stk.size() > max)
+            {
+                max = stk.size();
+            }
+        }
+
+        return max;
+    }
+}
+
+
+
+Approach 3 : Using Queue ; Level order traversal
+We travel the tree using level order traversal technique.
+While traversing we maintain a counter(count) to count the level.
+If there is more level, we just increment the count by 1.
+We return this count after all level are traversed.
+
+Complexity
+Time complexity:
+O(n) to travel all nodes
+Space complexity:
+O(n) for auxiliary queue
+Code
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public int maxDepth(TreeNode root) 
+    {
+        if(root == null)
+        {
+            return 0;
+        }
+
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        q.add(null);
+        int count = 1;
+
+        while(!q.isEmpty())
+        {
+            TreeNode front = q.remove();
+
+            if(front != null)
+            {
+                if(front.left != null)
+                {
+                    q.add(front.left);
+                }
+
+                if(front.right != null)
+                {
+                    q.add(front.right);
+                }
+            }
+            else
+            {
+                if(!q.isEmpty())
+                {
+                    count++;
+                    q.add(null);
+                }
+
+            }
+        }
+
+        return count;
+    }
+}
