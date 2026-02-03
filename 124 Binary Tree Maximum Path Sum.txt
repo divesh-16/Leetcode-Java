@@ -1,0 +1,75 @@
+Intuition
+Use post-order traversal technique.
+Approach
+Step 1 : Calculate max sum of left subtree
+Step 2 : Calculate max sum of right subtree
+Step 3 : Maintain a 'max' variable to store maxPathSum . Store the sum of left subtree and right subtree plus the root.val if it is greater than max.
+Step 4 : Return the maximum of sum from left or right with root.val from function
+Step 5 : Return max.
+Complexity
+Time complexity:
+O(n) to travers each node
+Space complexity:
+O(n) for auxiliary stack(recursion calls) otherwise O(1)
+Code
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+
+    int max = Integer.MIN_VALUE;
+
+   // Keeping max as a variable to be accessed by every(global).
+    // Assigning it to lowest integer because max can negative. 
+    int max = Integer.MIN_VALUE;
+
+    public int sum(TreeNode T)
+    {
+        if(T==null)
+        {
+            return 0;
+        }
+        else
+        {
+            // when a function returns a value which is negative, we will not consider it because we need to find max. And adding a negative value will reduce the greater effect of the number
+            // It will reduce the greater effect of the number because it will move away(left) from zero in the number line, which reduces the value of a number.
+            int lsum = Math.max(0,sum(T.left));
+            int rsum = Math.max(0,sum(T.right));
+
+
+            if((lsum+rsum+T.val) > max)
+                max = lsum+rsum+T.val;
+
+
+            // To find max sum from a tree we are only returing sum of either left subtree or right subtree which is greater.
+            // Returing left(lsum) or right(rsum) and current value(T.val) tells us which side have more weight or say have greater numbers. 
+            if(lsum>rsum)
+            {
+                return lsum + T.val;
+            }
+            else
+            {
+                return rsum + T.val;
+            }
+           
+        }
+    }
+
+    public int maxPathSum(TreeNode root) 
+    {
+        sum(root);
+        return max;
+    }
+}
