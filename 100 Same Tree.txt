@@ -1,0 +1,57 @@
+Intuition
+Approach
+Step 1 : If both trees are null return true
+Step 2 : If one is null another is not null then return false
+Step 3 : Recursively call for current root's left and right subtree.
+Step 4 : If left-subtree and right-subtree is similar and both trees's value is same then return true
+- Otherwise return false.
+Complexity
+Time complexity:
+O(n) to travel nodes of tree.
+Space complexity:
+Code
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    
+    public boolean isSameTree(TreeNode p, TreeNode q) 
+    {
+        if(p==null && q==null)
+        {
+            return true;
+        }
+        else if((p!=null && q==null) || (p==null && q!=null))
+        {
+            return false;
+        }
+        else
+        {
+            boolean lc = isSameTree(p.left,q.left);
+            boolean rc = isSameTree(p.right,q.right);
+
+            if(lc && rc && p.val==q.val)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+    }
+}
