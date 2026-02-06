@@ -1,0 +1,91 @@
+Intuition
+Use Level order technique to solve this question.
+Approach
+Maintain boolean 'leftToRight', which says whether we have to add list normally or reverse the list and add.
+Initially 'leftToRight' will be true and after every level we will assign 'leftToRight' to it's opposite. (i.e if it is true we will assign it to false and if it is false we assign it to true)
+When inserting the list, we check 'leftToRight' is true
+If yes, we simply add the list
+Otherwise we reverse the list and then add.
+Complexity
+Time complexity:
+O(n) to travel all nodes of tree.
+O(n) to reverse the n nodes in the list.
+~ O(n)
+Space complexity:
+O(n) for auxiliary queue.
+Code
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) 
+    {
+        List<List<Integer>> ans = new ArrayList<>();
+        if(root == null)
+        {
+            return ans;
+        }
+
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        q.add(null);
+        boolean leftToRight = true;
+        List<Integer> L = new LinkedList<>();
+
+        while(!q.isEmpty())
+        {
+            TreeNode T = q.remove();
+            if(T != null)
+            {
+                L.add(T.val);
+                if(T.left != null)
+                {
+                    q.add(T.left);
+                }
+
+                if(T.right != null)
+                {
+                    q.add(T.right);
+                }
+            }
+            else
+            {
+                if(leftToRight)
+                {
+                    ans.add(new ArrayList<>(L));
+                    L.clear();
+                }
+                else
+                {
+                    Collections.reverse(L);
+                    ans.add(new ArrayList<>(L));
+                    L.clear();
+                }
+
+                if(!q.isEmpty())
+                {
+                    q.add(null);
+                    leftToRight = !leftToRight;
+                }
+                
+            }
+
+            
+        }
+
+        return ans;
+    }
+}
