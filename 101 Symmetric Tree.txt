@@ -1,0 +1,72 @@
+Intuition
+We will use postorder technique.
+
+Approach
+We use postorder technique and reach the leaf node.
+After reaching leaf nodes we backtrack and check if each node is symmetric or not.
+To check if nodes are symmetric or not
+first check if both are null or not. If yes, return true
+If one is null and another is not null then return false.
+If both are not null, then check whether their values are same or not. If their values are same and their subtrees are also symmetric then return true, otherwise return false.
+
+Complexity
+Time complexity:
+O(n) to reach all nodes
+Space complexity:
+O(1) constant space if we do not consider the auxiliary stack created through recursion
+
+Code
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution 
+{
+    public boolean isMirror(TreeNode T, TreeNode S)
+    {
+        if(T == null && S == null)
+        {
+            return true;
+        }
+        else if((T != null && S == null) || (T == null && S != null))
+        {
+            return false;
+        }
+        else
+        {
+            boolean lc = isMirror(T.left,S.right);
+            boolean rc = isMirror(T.right,S.left);
+            
+
+            if(T.val == S.val && lc && rc)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    public boolean isSymmetric(TreeNode root) 
+    {
+        if(root.left==null && root.right==null)
+        {
+            return true;
+        }
+
+        return isMirror(root.left,root.right);
+    }
+}
